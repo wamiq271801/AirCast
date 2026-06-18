@@ -1,0 +1,249 @@
+@import "tailwindcss" source(none);
+@source "../app";
+@source "../components";
+@source "../features";
+@source "../hooks";
+@source "../lib";
+@source "../providers";
+@import "tw-animate-css";
+@import "plyr/dist/plyr.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * AirCast — cinematic dark theme.
+ * Near-black surfaces, soft borders, generous radii, premium typography.
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+
+  --font-display: "Inter Tight", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  --radius: 1rem;
+
+  /* Near-black canvas */
+  --background: oklch(0.13 0.005 270);
+  --foreground: oklch(0.98 0.002 270);
+
+  /* Elevated charcoal surfaces */
+  --surface: oklch(0.165 0.006 270);
+  --surface-elevated: oklch(0.205 0.007 270);
+
+  --card: oklch(0.17 0.006 270);
+  --card-foreground: oklch(0.98 0.002 270);
+
+  --popover: oklch(0.19 0.006 270);
+  --popover-foreground: oklch(0.98 0.002 270);
+
+  /* Restrained off-white primary — premium, not flashy */
+  --primary: oklch(0.97 0.002 270);
+  --primary-foreground: oklch(0.13 0.005 270);
+
+  --secondary: oklch(0.24 0.008 270);
+  --secondary-foreground: oklch(0.97 0.002 270);
+
+  --muted: oklch(0.22 0.007 270);
+  --muted-foreground: oklch(0.68 0.012 270);
+
+  --accent: oklch(0.26 0.01 270);
+  --accent-foreground: oklch(0.98 0.002 270);
+
+  --destructive: oklch(0.62 0.21 25);
+  --destructive-foreground: oklch(0.98 0.002 270);
+
+  --border: oklch(1 0 0 / 8%);
+  --input: oklch(1 0 0 / 12%);
+  --ring: oklch(0.75 0.02 270 / 60%);
+
+  --shadow-cinematic:
+    0 30px 60px -20px rgb(0 0 0 / 0.6),
+    0 10px 20px -10px rgb(0 0 0 / 0.5);
+}
+
+/* Dark is the only mode — keep .dark class working for shadcn primitives. */
+.dark {
+  color-scheme: dark;
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  * {
+    border-color: var(--color-border);
+  }
+
+  html,
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    /* Safe area support on mobile */
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+
+  ::selection {
+    background: oklch(0.97 0.002 270 / 0.2);
+  }
+
+  /* Sleek scrollbars */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: oklch(1 0 0 / 0.08);
+    border-radius: 999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: oklch(1 0 0 / 0.16);
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .hero-fade {
+    background: linear-gradient(
+      to top,
+      var(--background) 0%,
+      color-mix(in oklab, var(--background) 70%, transparent) 35%,
+      transparent 70%
+    );
+  }
+
+  .hero-side-fade {
+    background: linear-gradient(
+      to right,
+      color-mix(in oklab, var(--background) 90%, transparent) 0%,
+      color-mix(in oklab, var(--background) 50%, transparent) 40%,
+      transparent 70%
+    );
+  }
+}
+
+/* Plyr — tune to AirCast palette */
+:root {
+  --plyr-color-main: oklch(0.97 0.002 270);
+  --plyr-video-background: #000;
+  --plyr-menu-background: oklch(0.17 0.006 270);
+  --plyr-menu-color: oklch(0.98 0.002 270);
+  --plyr-tooltip-background: oklch(0.17 0.006 270);
+  --plyr-tooltip-color: oklch(0.98 0.002 270);
+  --plyr-video-control-color: oklch(0.98 0.002 270);
+  --plyr-video-control-color-hover: oklch(0.13 0.005 270);
+  --plyr-range-fill-background: oklch(0.97 0.002 270);
+}
+
+.plyr {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+/* Letterbox video so black bars appear instead of cropping */
+.plyr video {
+  object-fit: contain !important;
+}
+
+/* Remove background from all Plyr control buttons so the video shows through */
+.plyr__control,
+.plyr__control:hover,
+.plyr__control:focus,
+.plyr__control:active,
+.plyr__control[aria-expanded="true"],
+.plyr__control--overlaid,
+.plyr__control--overlaid:hover,
+.plyr__control--overlaid:focus,
+.plyr__control--overlaid:active {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Keep icons visible — subtle drop shadow for contrast against any video frame */
+.plyr__control svg {
+  filter: drop-shadow(0 2px 4px rgb(0 0 0 / 0.5));
+}
+
+.plyr.plyr--gesture-seeking .plyr__controls {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transform: translateY(100%) !important;
+}
+
+.plyr.plyr--hide-controls .plyr__controls,
+.plyr.plyr--gesture-seeking .plyr__control--overlaid,
+.plyr.plyr--hide-controls .plyr__control--overlaid {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Hide rewind / fast-forward on touch devices (mobile); show only on desktop */
+@media (pointer: coarse) {
+  .plyr__controls [data-plyr="rewind"],
+  .plyr__controls [data-plyr="fast-forward"] {
+    display: none !important;
+  }
+}
