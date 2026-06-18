@@ -68,8 +68,8 @@ function Header() {
             aria-hidden
             className="block h-6 w-6 bg-foreground transition-transform group-hover:scale-105"
             style={{
-              WebkitMaskImage: `url(${logoAsset})`,
-              maskImage: `url(${logoAsset})`,
+              WebkitMaskImage: `url(${logoAsset.src})`,
+              maskImage: `url(${logoAsset.src})`,
               WebkitMaskRepeat: "no-repeat",
               maskRepeat: "no-repeat",
               WebkitMaskPosition: "center",

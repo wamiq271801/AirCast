@@ -7,6 +7,7 @@ import { Loader2 } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import logoAsset from "@/assets/aircast-logo.png";
 
 export default function LoginPage() {
   const { status, isAuthenticated, login } = useAuth();
@@ -49,8 +50,8 @@ export default function LoginPage() {
             aria-hidden
             className="block h-10 w-10 bg-foreground"
             style={{
-              WebkitMaskImage: `url(/apple-touch-icon.png)`,
-              maskImage: `url(/apple-touch-icon.png)`,
+              WebkitMaskImage: `url(${logoAsset.src})`,
+              maskImage: `url(${logoAsset.src})`,
               WebkitMaskRepeat: "no-repeat",
               maskRepeat: "no-repeat",
               WebkitMaskPosition: "center",
