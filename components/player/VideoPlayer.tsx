@@ -123,6 +123,8 @@ export function VideoPlayer({
       seekTime: 10,
       tooltips: { controls: false, seek: false },
       clickToPlay: false,
+      // Disable double-click to fullscreen — interferes with double-tap seek gestures
+      listeners: { dblclick: () => false },
       ratio: "16:9",
       storage: { enabled: false },
     });
@@ -200,7 +202,17 @@ export function VideoPlayer({
     const container = video.closest(".plyr") as HTMLElement | null;
     setPlyrContainer(container);
 
+    // Block any remaining double-click fullscreen toggle from browser/Plyr
+    const blockDblClick = (e: Event) => {
+      e.preventDefault();
+      e.stopPropagation();
+    };
+    container?.addEventListener("dblclick", blockDblClick, true);
+    video.addEventListener("dblclick", blockDblClick, true);
+
     return () => {
+      container?.removeEventListener("dblclick", blockDblClick, true);
+      video.removeEventListener("dblclick", blockDblClick, true);
       if (pauseDebounceRef.current !== null) {
         window.clearTimeout(pauseDebounceRef.current);
         pauseDebounceRef.current = null;
